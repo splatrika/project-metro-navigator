@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Source.Entities;
+namespace Splatrika.MetroNavigator.Source.Entities;
 
 public abstract class DurationFactor
 {

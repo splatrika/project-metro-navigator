@@ -1,4 +1,4 @@
-﻿namespace Source.Entities;
+﻿namespace Splatrika.MetroNavigator.Source.Entities;
 
 public class Color
 {

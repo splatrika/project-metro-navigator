@@ -1,15 +1,15 @@
 ﻿using System;
-namespace Source.Entities;
+namespace Splatrika.MetroNavigator.Source.Entities;
 
-public class Railway
+public class Railway : MapElement
 {
-    public int Id { get; set; }
     public Station From { get; set; }
     public Station To { get; set; }
     public DurationFactor Duration { get; set; }
     public List<Position> Points { get; set; }
 
-    public Railway(Station from, Station to, DurationFactor duration, List<Position> points)
+    public Railway(Station from, Station to, DurationFactor duration,
+        List<Position> points, Map map) : base(map)
     {
         From = from;
         To = to;

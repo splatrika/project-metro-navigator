@@ -1,9 +1,9 @@
 ﻿using System;
-namespace Source.Entities;
+using System.ComponentModel.DataAnnotations;
+namespace Splatrika.MetroNavigator.Source.Entities;
 
-public class Line
+public class Line : MapElement
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public Color Color { get; set; }
 

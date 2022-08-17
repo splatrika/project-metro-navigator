@@ -1,13 +1,12 @@
 ﻿using System;
-namespace Source.Entities;
+namespace Splatrika.MetroNavigator.Source.Entities;
 
-public class Transfer
+public class Transfer : MapElement
 {
-    public int Id { get; set; }
     public Station From { get; set; }
     public Station To { get; set; }
 
-    public Transfer(int id, Station from, Station to)
+    public Transfer(int id, Station from, Station to, Map map) : base(map)
     {
         Id = id;
         From = from;
