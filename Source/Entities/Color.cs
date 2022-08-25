@@ -1,15 +1,15 @@
 ﻿namespace Splatrika.MetroNavigator.Source.Entities;
 
-public class Color
+public record Color(float Red = 0, float Green = 0, float Blue = 0, float Alpha = 1)
 {
-    public float Red { get; set; }
-    public float Green { get; set; }
-    public float Blue { get; set; }
-    public float Alpha { get; set; }
+    public static Color White => new(1, 1, 1, 1);
 
     public string GetHex()
     {
-        return $"#{Red:X2}{Green:X2}{Blue:X2}{Alpha:X2}";
+        var red = (int)(Red * 255);
+        var green = (int)(Green * 255);
+        var blue = (int)(Blue * 255);
+        var alpha = (int)(Alpha * 255);
+        return $"#{red:X2}{green:X2}{blue:X2}{alpha:X2}";
     }
 }
-

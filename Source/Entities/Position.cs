@@ -1,9 +1,3 @@
-﻿using System;
-namespace Splatrika.MetroNavigator.Source.Entities;
+﻿namespace Splatrika.MetroNavigator.Source.Entities;
 
-public class Position
-{
-    public float Top { get; set; }
-    public float Left { get; set; }
-}
-
+public record Position(float Left = 0, float Top = 0);
