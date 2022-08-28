@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Splatrika.MetroNavigator.Source.Interfaces;
+
 namespace Splatrika.MetroNavigator.Source.Entities.MapAggregate;
 
-public class Map : EntityBase
+public class Map : EntityBase, IAggregateRoot
 {
     public string Name { get; set; }
     public IReadOnlyCollection<Line> Lines => _lines.AsReadOnly();

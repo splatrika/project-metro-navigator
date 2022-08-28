@@ -1,7 +1,9 @@
 ﻿using System;
+using Splatrika.MetroNavigator.Source.Interfaces;
+
 namespace Splatrika.MetroNavigator.Source.Entities.MapAppearanceAggregate;
 
-public class MapAppearance : EntityBase
+public class MapAppearance : EntityBase, IAggregateRoot
 {
     public int MapId { get; private set; }
     public IReadOnlyCollection<LineAppearance> Lines

@@ -14,6 +14,8 @@
     <Folder Include="Entities\MapAggregate\" />
     <Folder Include="Entities\MapAppearanceAggregate\" />
     <Folder Include="Data\Configuration\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Data\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Data\" />
@@ -23,6 +25,8 @@
     <None Remove="Entities\MapAgregate\" />
     <None Remove="Entities\MapAppearanceAggregate\" />
     <None Remove="Data\Configuration\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Data\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
