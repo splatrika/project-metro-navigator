@@ -15,9 +15,17 @@ public class MapAppearanceRepository :
 
     public override async Task<bool> ContainsAsync(int id)
     {
-        var queryResult = await _context.MapAppearance
+        var foundId = await _context.MapAppearance
             .Select(x => x.Id)
             .SingleOrDefaultAsync(x => x == id);
+        return foundId != default;
+    }
+
+    public async Task<bool> ContainsForMapAsync(int mapId)
+    {
+        var queryResult = await _context.MapAppearance
+            .Select(x => x.MapId)
+            .SingleOrDefaultAsync(x => x == mapId);
         return queryResult != default;
     }
 
@@ -29,19 +37,63 @@ public class MapAppearanceRepository :
     }
 
 
-    public override async Task<MapAppearance> GetAsync(int id, bool tracking = true)
+
+    public override async Task<MapAppearance> GetAsync(int id,
+        bool tracking = true)
     {
         return await GetAsync(id, tracking, _context.MapAppearance);
     }
 
 
-    public async Task<MapAppearance> GetFullAsync(int id, bool tracking = true)
+    public async Task<MapAppearance> GetFullAsync(int mapId,
+        bool tracking = true)
     {
-        return await GetAsync(id, tracking,
+        return await GetForMapAsync(mapId, tracking,
             _context.MapAppearance
+                .Include(x => x.Stations)
                 .Include(x => x.Lines)
-                .Include(x => x.Railways)
-                .Include(x => x.Stations));
+                .Include(x => x.Railways));
+    }
+
+
+    public async Task<MapAppearance> GetSingleLineOnly(int mapId, int lineId,
+        bool tracking = true)
+    {
+        return await GetForMapAsync(mapId, tracking,
+            _context.MapAppearance
+                .Include(x =>
+                    x.Lines.Where(x => x.LineId == lineId)));
+    }
+
+
+    public async Task<MapAppearance> GetSingleRailwayOnly(int mapId,
+        int railwayId, bool tracking = true)
+    {
+        return await GetForMapAsync(mapId, tracking,
+            _context.MapAppearance
+                .Include(x =>
+                    x.Railways.Where(x => x.RailwayId == railwayId)));
+    }
+
+
+    public async Task<MapAppearance> GetSingleStationOnly(int mapId,
+        int stationId, bool tracking = true)
+    {
+        return await GetForMapAsync(mapId, tracking,
+            _context.MapAppearance
+                .Include(x =>
+                    x.Stations.Where(x => x.StationId == stationId)));
+    }
+
+
+    private async Task<MapAppearance> GetForMapAsync(int mapId, bool tracking,
+        IQueryable<MapAppearance> query)
+    {
+        if (!tracking)
+        {
+            query = query.AsNoTracking();
+        }
+        return await query.SingleAsync(x => x.MapId == mapId);
     }
 }
 

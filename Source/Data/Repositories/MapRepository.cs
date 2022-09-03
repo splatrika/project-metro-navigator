@@ -9,10 +9,32 @@ public class MapRepository : EntityFrameworkRepository<Map, ApplicationContext>,
 {
     public MapRepository(ApplicationContext context) : base(context)
     {
-    }
-    
+    }  
 
-    public async Task<Map> GetFullAsync(int mapId, bool tracking = true)
+    public override async Task<bool> ContainsAsync(int id)
+    {
+        var foundId = await _context.Maps.Select(x => x.Id)
+            .SingleOrDefaultAsync(x => x == id);
+
+        return foundId != default;
+    }
+
+
+    public override Task DeleteAsync(int id)
+    {
+        var map = GetAsync(id);
+        _context.Remove(map);
+        return Task.CompletedTask;
+    }
+
+
+    public override async Task<Map> GetAsync(int id, bool tracking = true)
+    {
+        return await GetAsync(id, tracking, _context.Maps);
+    }  
+
+
+    public async Task<Map> GetFull(int mapId, bool tracking = true)
     {
         return await GetAsync(mapId, tracking,
             _context.Maps
@@ -20,79 +42,117 @@ public class MapRepository : EntityFrameworkRepository<Map, ApplicationContext>,
                 .Include(x => x.Stations)
                 .Include(x => x.Railways)
                 .ThenInclude(x => x.Duration)
-                .Include(x => x.Railways)
+                .Include(x => x.Transfers)
                 .ThenInclude(x => x.Duration));
-    }
+    }  
 
 
-    public async Task<Map> GetWithLinesAsync(int mapId, bool tracking = true)
+    public async Task<Map> GetWithLine(int mapId, int lineId, bool tracking = true)
+    {
+        return await GetAsync(mapId, tracking,
+            _context.Maps
+                .Include(x => x.Lines.Where(x => x.Id == lineId)));
+    }  
+
+
+    public async Task<Map> GetWithLines(int mapId, bool tracking = true)
     {
         return await GetAsync(mapId, tracking,
             _context.Maps
                 .Include(x => x.Lines));
-    }
+    }  
 
 
-    public async Task<Map> GetWithStationsAsync(int mapId, bool tracking = true)
+    public async Task<Map> GetWithRailway(int mapId, int railwayId,
+        bool tracking = true)
     {
         return await GetAsync(mapId, tracking,
             _context.Maps
-                .Include(x => x.Stations));
-    }
+                .Include(x => x.Railways.Where(x => x.Id == railwayId))
+                .ThenInclude(x => x.Duration));
+    }  
 
 
-    public async Task<Map> GetWithStationsAsync(int mapId, int lineId, bool tracking = true)
+    public async Task<Map> GetWithRailwayAndStationsBetween(int mapId,
+        int railwayId, bool tracking = true)
     {
         return await GetAsync(mapId, tracking,
             _context.Maps
-                .Include(x =>
-                    x.Stations.Where(x => x.Line.Id == lineId))
-                .ThenInclude(x => x.Line));
-    }
+                .Include(x => x.Railways.Where(x => x.Id == railwayId))
+                .ThenInclude(x => x.From)
+                .Include(x => x.Railways.Where(x => x.Id == railwayId))
+                .ThenInclude(x => x.To)
+                .Include(x => x.Railways.Where(x => x.Id == railwayId))
+                .ThenInclude(x => x.Duration));
+    }  
 
 
-    public async Task<Map> GetWithWaysAsync(int mapId, bool tracking = true)
+    public async Task<Map> GetWithRailways(int mapId, bool tracking = true)
     {
         return await GetAsync(mapId, tracking,
             _context.Maps
                 .Include(x => x.Railways)
-                .Include(x => x.Transfers));
-    }
+                .ThenInclude(x => x.Duration));
+    }  
 
 
-    public async Task<Map> GetWithWaysAsync(int mapId, int stationId, bool tracking = true)
+    public async Task<Map> GetWithStation(int mapId, int stationId,
+        bool tracking = true)
     {
         return await GetAsync(mapId, tracking,
             _context.Maps
-                .Include(x =>
-                    x.Stations.Where(x => x.Id == stationId))
-                .Include(x =>
-                    x.Transfers.Where(x => x.From.Id == stationId || x.To.Id == stationId))
-                .Include(x =>
-                    x.Railways.Where(x => x.From.Id == stationId || x.To.Id == stationId)));
-    }
+                .Include(x => x.Stations.Where(x => x.Id == stationId)));
+    }  
 
 
-    public override async Task DeleteAsync(int id)
+    public async Task<Map> GetWithStations(int mapId, bool tracking = true)
     {
-        var instance = await _context.Maps
-            .Select(x => new Map("", id))
-            .SingleAsync(x => x.Id == id);
-        _context.Maps.Remove(instance);
-    }
+        return await GetAsync(mapId, tracking,
+            _context.Maps
+                .Include(x => x.Stations));
+    }  
 
 
-    public override async Task<Map> GetAsync(int id, bool tracking = true)
+    public async Task<Map> GetWithStationsAndLines(int mapId,
+        bool tracking = true)
     {
-        return await GetAsync(id, tracking, _context.Maps);
-    }
+        return await GetAsync(mapId, tracking,
+            _context.Maps
+                .Include(x => x.Stations)
+                .Include(x => x.Lines));
+    }  
 
 
-    public override async Task<bool> ContainsAsync(int id)
+    public async Task<Map> GetWithTransfer(int mapId, int transferId,
+        bool tracking = true)
     {
-        var queryResult = await _context.Maps.Select(x => x.Id)
-            .SingleOrDefaultAsync(x => x == id);
-        return queryResult != default;
-    }
-}
+        return await GetAsync(mapId, tracking,
+            _context.Maps
+                .Include(x => x.Transfers.Where(x => x.Id == transferId))
+                .ThenInclude(x => x.Duration));
+    }  
+
+
+    public async Task<Map> GetWithTransferAndStationsBetween(int mapId,
+        int transferId, bool tracking = true)
+    {
+        return await GetAsync(mapId, tracking,
+            _context.Maps
+                .Include(x => x.Transfers.Where(x => x.Id == transferId))
+                .ThenInclude(x => x.From)
+                .Include(x => x.Transfers.Where(x => x.Id == transferId))
+                .ThenInclude(x => x.To)
+                .Include(x => x.Transfers.Where(x => x.Id == transferId))
+                .ThenInclude(x => x.Duration));
+    }  
+
+
+    public async Task<Map> GetWithTransfers(int mapId, bool tracking = true)
+    {
+        return await GetAsync(mapId, tracking,
+            _context.Maps
+                .Include(x => x.Transfers)
+                .ThenInclude(x => x.Duration));
+    }  
+}  
 
