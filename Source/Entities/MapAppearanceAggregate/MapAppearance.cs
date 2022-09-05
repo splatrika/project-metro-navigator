@@ -5,12 +5,12 @@ namespace Splatrika.MetroNavigator.Source.Entities.MapAppearanceAggregate;
 
 public class MapAppearance : EntityBase, IAggregateRoot
 {
-    public int MapId { get; private set; }
-    public IReadOnlyCollection<LineAppearance> Lines
+    public virtual int MapId { get; private set; }
+    public virtual IReadOnlyCollection<LineAppearance> Lines
         => _lines.AsReadOnly();
-    public IReadOnlyCollection<RailwayAppearance> Railways
+    public virtual IReadOnlyCollection<RailwayAppearance> Railways
         => _railways.AsReadOnly();
-    public IReadOnlyCollection<StationAppearance> Stations
+    public virtual IReadOnlyCollection<StationAppearance> Stations
         => _stations.AsReadOnly();
 
     private List<LineAppearance> _lines;
@@ -32,7 +32,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public LineAppearance UpdateLine(int lineId, Color color)
+    public virtual LineAppearance UpdateLine(int lineId, Color color)
     {
         var line = GetLine(lineId);
         line.Color = color;
@@ -40,7 +40,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public RailwayAppearance UpdateRailway(int railwayId, List<Position> points)
+    public virtual RailwayAppearance UpdateRailway(int railwayId, List<Position> points)
     {
         var railway = GetRailway(railwayId);
         railway.Points.Clear();
@@ -49,7 +49,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public StationAppearance UpdateStation(int stationId, Position position,
+    public virtual StationAppearance UpdateStation(int stationId, Position position,
         Caption caption)
     {
         var station = GetStation(stationId);
@@ -59,7 +59,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public LineAppearance GetLine(int id)
+    public virtual LineAppearance GetLine(int id)
     {
         var line = _lines.SingleOrDefault(x => x.LineId == id);
         if (line == null)
@@ -71,7 +71,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public RailwayAppearance GetRailway(int id)
+    public virtual RailwayAppearance GetRailway(int id)
     {
         var railway = _railways.SingleOrDefault(x => x.RailwayId == id);
         if (railway == null)
@@ -83,7 +83,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public StationAppearance GetStation(int id)
+    public virtual StationAppearance GetStation(int id)
     {
         var station = _stations.SingleOrDefault(x => x.StationId == id);
         if (station == null)
@@ -95,7 +95,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public void CleanUpLine(int lineId)
+    public virtual void CleanUpLine(int lineId)
     {
         var line = _lines.SingleOrDefault(x => x.LineId == lineId);
         if (line != null)
@@ -105,7 +105,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public void CleanUpRailway(int railwayId)
+    public virtual void CleanUpRailway(int railwayId)
     {
         var railway = _railways.SingleOrDefault(x => x.RailwayId == railwayId);
         if (railway != null)
@@ -115,7 +115,7 @@ public class MapAppearance : EntityBase, IAggregateRoot
     }
 
 
-    public void CleanUpStation(int stationId)
+    public virtual void CleanUpStation(int stationId)
     {
         var station = _stations.SingleOrDefault(x => x.StationId == stationId);
         if (station != null)

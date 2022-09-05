@@ -17,7 +17,7 @@ public static class MapBuilder
         CreateCallbacks? createCallbacks = null,
         RemoveCallbacks? removeCallbacks = null)
     {
-        var mock = new Mock<Map>();
+        var mock = new Mock<Map>("", mapId);
 
         if (createCallbacks != null)
             MockCreate(mock, (CreateCallbacks)createCallbacks);
@@ -49,7 +49,7 @@ public static class MapBuilder
         CreateCallbacks callbacks)
     {
         mock.Setup(m => m.CreateLine(It.IsAny<string>(), 0))
-            .Returns<string>(name =>
+            .Returns<string, int>((name, _) =>
             {
                 var line = new Line(name);
                 if (callbacks.CreateLine != null)
@@ -60,7 +60,7 @@ public static class MapBuilder
             });
 
         mock.Setup(m => m.CreateStation(It.IsAny<int>(), It.IsAny<string>(), 0))
-            .Returns<int, string>((lineId, name) =>
+            .Returns<int, string, int>((lineId, name, _) =>
             {
                 var line = new Line("line", lineId);
                 var station = new Station(name, line);
@@ -76,8 +76,8 @@ public static class MapBuilder
                                         It.IsAny<int>(),
                                         It.IsAny<DurationFactor>(),
                                         0))
-            .Returns<int, int, int, DurationFactor>(
-            (lineId, fromId, toId, duration) =>
+            .Returns<int, int, int, DurationFactor, int>(
+            (lineId, fromId, toId, duration, _) =>
             {
                 var line = new Line("line", lineId);
                 var from = new Station("from", line, fromId);
@@ -95,8 +95,8 @@ public static class MapBuilder
                                          It.IsAny<int>(),
                                          It.IsAny<DurationFactor>(),
                                          0))
-            .Returns<int, int, DurationFactor>(
-            (fromId, toId, duration) =>
+            .Returns<int, int, DurationFactor, int>(
+            (fromId, toId, duration, _) =>
             {
                 var line = new Line("line", -1);
                 var from = new Station("from", line, fromId);

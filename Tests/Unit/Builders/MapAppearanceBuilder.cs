@@ -15,7 +15,7 @@ public static class MapAppearanceBuilder
         CleanUpCallbacks? cleanUpCallbacks = null,
         UpdateCallbacks? updateCallbacks = null)
     {
-        var mock = new Mock<MapAppearance>();
+        var mock = new Mock<MapAppearance>(mapId);
         if (cleanUpCallbacks != null)
             MockCleanUp(mock, (CleanUpCallbacks)cleanUpCallbacks);
         if (updateCallbacks != null)
@@ -78,7 +78,7 @@ public static class MapAppearanceBuilder
             .Callback<int, List<Position>>((id, points) =>
             {
                 var created = new RailwayAppearance(id, points);
-                callbacks.UpdateRailway?.Invoke(id, points);
+                callbacks.UpdateRailway?.Invoke(created);
             });
     }
 

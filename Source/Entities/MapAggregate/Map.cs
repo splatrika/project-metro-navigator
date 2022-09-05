@@ -4,11 +4,11 @@ namespace Splatrika.MetroNavigator.Source.Entities.MapAggregate;
 
 public class Map : EntityBase, IAggregateRoot
 {
-    public string Name { get; set; }
-    public IReadOnlyCollection<Line> Lines => _lines.AsReadOnly();
-    public IReadOnlyCollection<Station> Stations => _stations.AsReadOnly();
-    public IReadOnlyCollection<Railway> Railways => _railways.AsReadOnly();
-    public IReadOnlyCollection<Transfer> Transfers => _transfers.AsReadOnly();
+    public virtual string Name { get; set; }
+    public virtual IReadOnlyCollection<Line> Lines => _lines.AsReadOnly();
+    public virtual IReadOnlyCollection<Station> Stations => _stations.AsReadOnly();
+    public virtual IReadOnlyCollection<Railway> Railways => _railways.AsReadOnly();
+    public virtual IReadOnlyCollection<Transfer> Transfers => _transfers.AsReadOnly();
 
     private List<Line> _lines;
     private List<Station> _stations;
@@ -30,7 +30,7 @@ public class Map : EntityBase, IAggregateRoot
     }
 
 
-    public Line CreateLine(string name, int id = 0)
+    public virtual Line CreateLine(string name, int id = 0)
     {
         if (_lines == null) _lines = new();
         var line = new Line(name, id);
@@ -39,7 +39,7 @@ public class Map : EntityBase, IAggregateRoot
     }
 
 
-    public Station CreateStation(int lineId, string name, int id = 0)
+    public virtual Station CreateStation(int lineId, string name, int id = 0)
     {
         Require(_lines, "Lines");
         if (_stations == null) _stations = new();
@@ -55,7 +55,7 @@ public class Map : EntityBase, IAggregateRoot
     }
 
 
-    public Railway CreateRailway(int lineId, int fromStationId, int toStationId,
+    public virtual Railway CreateRailway(int lineId, int fromStationId, int toStationId,
         DurationFactor duration, int id = 0)
     {
         return CreateWay(_railways, fromStationId, toStationId, duration,
@@ -79,7 +79,7 @@ public class Map : EntityBase, IAggregateRoot
     }
 
 
-    public Transfer CreateTransfer(int fromStationId, int toStationId,
+    public virtual Transfer CreateTransfer(int fromStationId, int toStationId,
         DurationFactor duration, int id = 0)
     {
         return CreateWay(_transfers, fromStationId, toStationId, duration,
@@ -88,7 +88,7 @@ public class Map : EntityBase, IAggregateRoot
     }
 
 
-    public void RemoveLine(int id)
+    public virtual void RemoveLine(int id)
     {
         Require(_lines, "Lines");
         Require(_stations, "Stations");
@@ -100,7 +100,7 @@ public class Map : EntityBase, IAggregateRoot
     }
 
 
-    public void RemoveStation(int id)
+    public virtual void RemoveStation(int id)
     {
         Require(_stations, "Stations");
         var station = _stations.Single(x => x.Id == id);
@@ -110,13 +110,13 @@ public class Map : EntityBase, IAggregateRoot
     }
 
 
-    public void RemoveRailway(int id)
+    public virtual void RemoveRailway(int id)
     {
         RemoveWay(_railways, id);
     }
 
 
-    public void RemoveTransfer(int id)
+    public virtual void RemoveTransfer(int id)
     {
         RemoveWay(_transfers, id);
     }

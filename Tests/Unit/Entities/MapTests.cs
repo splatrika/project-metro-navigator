@@ -9,7 +9,7 @@ public class MapTests
     {
         const int id = 10;
         const string name = "London";
-        var color = new Color { RedColor = 0.5f };
+        var color = new Color { Red = 0.5f };
         var map = new Map("UK");
         var line = map.CreateLine(name, id);
         Assert.Equal(name, line.Name);
