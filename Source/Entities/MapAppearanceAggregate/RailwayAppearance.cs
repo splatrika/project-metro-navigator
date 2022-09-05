@@ -10,10 +10,10 @@ public class RailwayAppearance : EntityBase
     private RailwayAppearance() { } //Required by EF
 #pragma warning restore 8618
 
-    public RailwayAppearance(int railwayId)
+    public RailwayAppearance(int railwayId, IEnumerable<Position>? points = null)
     {
         RailwayId = railwayId;
-        Points = new();
+        Points = points == null ? new() : new(points);
     }
 }
 

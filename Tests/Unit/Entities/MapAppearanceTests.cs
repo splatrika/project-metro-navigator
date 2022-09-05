@@ -37,7 +37,7 @@ public class MapAppearanceTests
             new(2, 3),
             new(4.5f, -3.44f)
         };
-        var caption = new Caption(new Position(2, -4), TextAligin.Center);
+        var caption = new Caption(new Position(2, -4), TextAlign.Center);
 
         var appearance = new MapAppearance(id);
 
@@ -75,7 +75,7 @@ public class MapAppearanceTests
             new(4.5f, -3.44f)
         };
         var appearance = new MapAppearance(id);
-        var caption = new Caption(new Position(2, -4), TextAligin.Center);
+        var caption = new Caption(new Position(2, -4), TextAlign.Center);
 
         appearance.UpdateLine(id, color);
         var line = appearance.GetLine(id);
@@ -108,7 +108,7 @@ public class MapAppearanceTests
             new(4.5f, -3.44f)
         };
         var appearance = new MapAppearance(id);
-        var caption = new Caption(new Position(2, -4), TextAligin.Center);
+        var caption = new Caption(new Position(2, -4), TextAlign.Center);
 
         appearance.UpdateLine(id, new());
         var line = appearance.GetLine(id);
@@ -145,7 +145,7 @@ public class MapAppearanceTests
             new(4.5f, -3.44f)
         };
         var appearance = new MapAppearance(id);
-        var caption = new Caption(new Position(2, -4), TextAligin.Center);
+        var caption = new Caption(new Position(2, -4), TextAlign.Center);
 
         var line = appearance.UpdateLine(id, new(1, 2, 3, 10));
         appearance.CleanUpLine(id);
