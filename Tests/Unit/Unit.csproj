@@ -31,10 +31,16 @@
     <None Remove="Data\" />
     <None Remove="Data\Converters\" />
     <None Remove="Entities\" />
+    <None Remove="Services\" />
+    <None Remove="Services\Editor\" />
+    <None Remove="Builders\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Converters\" />
     <Folder Include="Entities\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Editor\" />
+    <Folder Include="Builders\" />
   </ItemGroup>
 </Project>
