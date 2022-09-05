@@ -15,5 +15,22 @@ public class RailwayAppearance : EntityBase
         RailwayId = railwayId;
         Points = points == null ? new() : new(points);
     }
+
+
+    public static RailwayAppearance GetDefault(int id)
+    {
+        return new(id);
+    }
+
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is RailwayAppearance appearance)
+        {
+            return appearance.RailwayId == RailwayId &&
+                appearance.Points.SequenceEqual(Points);
+        }
+        return base.Equals(obj);
+    }
 }
 

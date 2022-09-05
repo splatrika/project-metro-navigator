@@ -17,5 +17,23 @@ public class StationAppearance : EntityBase
         Position = position;
         Caption = caption;
     }
+
+
+    public static StationAppearance GetDefault(int id)
+    {
+        return new(id, new Position(), Caption.Default);
+    }
+
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is StationAppearance appearance)
+        {
+            return appearance.StationId == StationId &&
+                appearance.Position.Equals(Position) &&
+                appearance.Caption.Equals(Caption);
+        }
+        return base.Equals(obj);
+    }
 }
 

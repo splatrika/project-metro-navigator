@@ -15,5 +15,22 @@ public class LineAppearance : EntityBase
         LineId = lineId;
         Color = color;
     }
+
+
+    public static LineAppearance GetDefault(int id)
+    {
+        return new(id, new());
+    }
+
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is LineAppearance appearance)
+        {
+            return appearance.LineId == LineId &&
+                appearance.Color.Equals(Color);
+        }
+        return base.Equals(obj);
+    }
 }
 
