@@ -21,10 +21,10 @@ public static class MapAppearanceRepositoryBuilder
             .Callback(() => saveCallback?.Invoke())
             .Returns(Task.CompletedTask);
 
-        mock.Setup(m => m.ContainsAsync(appearance.Id))
+        mock.Setup(m => m.ContainsAsync(appearance.MapId))
             .Returns(Task.FromResult(true));
 
-        mock.Setup(m => m.ContainsAsync(It.IsNotIn(appearance.Id)))
+        mock.Setup(m => m.ContainsAsync(It.IsNotIn(appearance.MapId)))
             .Returns(Task.FromResult(false));
 
         mock.Setup(m => m.AddAsync(It.IsAny<MapAppearance>()))

@@ -31,12 +31,15 @@ public static class MapAppearanceBuilder
                 return found;
             });
 
+        mock.SetupGet(m => m.MapId)
+            .Returns(mapId);
+
         mock.Setup(m => m.GetStation(It.IsAny<int>()))
             .Returns<int>(id =>
             {
                 var @default = StationAppearance.GetDefault(id);
                 var list = stationsReference ?? new();
-                var found = list.SingleOrDefault(x => x.Id == id)
+                var found = list.SingleOrDefault(x => x.StationId == id)
                     ?? @default;
                 return found;
             });
@@ -46,7 +49,7 @@ public static class MapAppearanceBuilder
             {
                 var @default = RailwayAppearance.GetDefault(id);
                 var list = railwaysReference ?? new();
-                var found = list.SingleOrDefault(x => x.Id == id)
+                var found = list.SingleOrDefault(x => x.RailwayId == id)
                     ?? @default;
                 return found;
             });
@@ -55,7 +58,7 @@ public static class MapAppearanceBuilder
     }
 
 
-    public static void MockUpdates(Mock<MapAppearance> mock,
+    private static void MockUpdates(Mock<MapAppearance> mock,
         UpdateCallbacks callbacks)
     {
         mock.Setup(m => m.UpdateLine(It.IsAny<int>(), It.IsAny<Color>()))
@@ -83,7 +86,7 @@ public static class MapAppearanceBuilder
     }
 
 
-    public static void MockCleanUp(Mock<MapAppearance> mock,
+    private static void MockCleanUp(Mock<MapAppearance> mock,
         CleanUpCallbacks callbacks)
     {
         var expressionCallbacks = new Dictionary<

@@ -188,7 +188,7 @@ public class MapAppearanceServiceTests
 
         var repository = MapAppearanceRepositoryBuilder.WithSingle(appearance,
             allowedQuery: x => x.GetFullAsync(mapId, true),
-            saveCallback: () => saved = false);
+            saveCallback: () => saved = true);
 
         var service = new MapAppearanceService(repository);
 
