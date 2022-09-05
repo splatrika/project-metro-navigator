@@ -7,7 +7,7 @@ using Splatrika.MetroNavigator.Source.Interfaces;
 
 namespace Splatrika.MetroNavigator.Tests.Unit.Builders;
 
-public static class AppearanceBuilder
+public static class AppearanceServiceBuilder
 {
     public static IMapAppearanceService Empty(
         UpdateCallbacks? updateCallbacks = null,

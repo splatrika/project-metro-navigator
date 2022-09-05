@@ -31,7 +31,7 @@ public class RailwayEditorServiceTests
         var repository = MapRepositoryBuilder.WithSingleMap(map,
             allowedQuery: x => x.GetWithStationsAndLines(mapId, true));
 
-        var appearanceService = AppearanceBuilder.Empty();
+        var appearanceService = AppearanceServiceBuilder.Empty();
         var service = new RailwayEditorService(repository, appearanceService);
         await Assert.ThrowsAsync<EditorException>(async () =>
         {
@@ -67,7 +67,7 @@ public class RailwayEditorServiceTests
             allowedQuery: x => x.GetWithStationsAndLines(mapId, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty();
+        var appearanceService = AppearanceServiceBuilder.Empty();
 
         var service = new RailwayEditorService(repository, appearanceService);
         await service.Create(mapId);
@@ -102,7 +102,7 @@ public class RailwayEditorServiceTests
             allowedQuery: x => x.GetWithRailwayAndStationsBetween
                 (mapId, railway.Id, It.IsAny<bool>()));
 
-        var appearanceService = AppearanceBuilder
+        var appearanceService = AppearanceServiceBuilder
             .WithConfiguredRailway(mapId, appearance);
 
         var service = new RailwayEditorService(repository, appearanceService);
@@ -137,7 +137,7 @@ public class RailwayEditorServiceTests
             allowedQuery: x => x.GetFull(mapId, true),
             saveCallback: () => saved = false);
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             updateCallbacks: new()
             {
                 UpdateRailwayCallback = (map, railwayId, points) =>
@@ -220,7 +220,7 @@ public class RailwayEditorServiceTests
                 if (created != null) EntityUtility.ChangeId(created, newId);
             });
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             cleanUpCallbacks: new()
             {
                 CleanUpRailwayCallback = (map, railwayId) =>
@@ -285,7 +285,7 @@ public class RailwayEditorServiceTests
             allowedQuery: x => x.GetWithRailway(mapId, railway.Id, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             cleanUpCallbacks: new()
             {
                 CleanUpRailwayCallback = (map, railwayId) =>

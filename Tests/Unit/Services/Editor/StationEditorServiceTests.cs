@@ -42,7 +42,7 @@ public class StationEditorServiceTests
             allowedQuery: x => x.GetWithLines(mapId, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty();
+        var appearanceService = AppearanceServiceBuilder.Empty();
         var service = new StationEditorService(repository, appearanceService);
 
         service.Create(mapId);
@@ -61,7 +61,7 @@ public class StationEditorServiceTests
         var repository = MapRepositoryBuilder.WithSingleMap(map,
             allowedQuery: x => x.GetWithLines(mapId, true));
 
-        var appearanceService = AppearanceBuilder.Empty();
+        var appearanceService = AppearanceServiceBuilder.Empty();
         var service = new StationEditorService(repository, appearanceService);
 
         await Assert.ThrowsAsync<EditorException>(
@@ -86,7 +86,7 @@ public class StationEditorServiceTests
             allowedQuery: x =>
                 x.GetWithStationsAndLines(mapId, It.IsAny<bool>()));
 
-        var appearanceService = AppearanceBuilder
+        var appearanceService = AppearanceServiceBuilder
             .WithConfiguredStation(mapId, appearance);
 
         var service = new StationEditorService(repository, appearanceService);
@@ -117,7 +117,7 @@ public class StationEditorServiceTests
             allowedQuery: x => x.GetFull(mapId, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             updateCallbacks: new()
             {
                 UpdateStationCallback =
@@ -194,7 +194,7 @@ public class StationEditorServiceTests
                 if (created != null) EntityUtility.ChangeId(created, newId);
             });
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             cleanUpCallbacks: new()
             {
                 CleanUpStationCallback = (map, elementId) =>
@@ -261,7 +261,7 @@ public class StationEditorServiceTests
             allowedQuery: x => x.GetWithStation(mapId, stationId, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             cleanUpCallbacks: new()
             {
                 CleanUpStationCallback = (map, elementId) =>

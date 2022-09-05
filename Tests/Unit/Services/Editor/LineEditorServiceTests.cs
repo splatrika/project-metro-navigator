@@ -35,7 +35,7 @@ public class LineEditorServiceTests
             allowedQuery: x => x.GetAsync(mapId, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty();
+        var appearanceService = AppearanceServiceBuilder.Empty();
 
         var service = new LineEditorService(repository, appearanceService);
 
@@ -57,7 +57,7 @@ public class LineEditorServiceTests
 
         var repository = MapRepositoryBuilder.WithSingleMap(map,
             allowedQuery: x => x.GetWithLine(mapId, lineId, It.IsAny<bool>()));
-        var appearnaceService = AppearanceBuilder
+        var appearnaceService = AppearanceServiceBuilder
             .WithConfiguredLine(mapId, appearance);
 
         var service = new LineEditorService(repository, appearnaceService);
@@ -84,7 +84,7 @@ public class LineEditorServiceTests
             allowedQuery: x => x.GetWithLine(mapId, lineId, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             updateCallbacks: new()
             {
                 UpdateLineCallback = (map, lineId, color) =>
@@ -136,7 +136,7 @@ public class LineEditorServiceTests
             allowedQuery: x => x.GetWithLine(mapId, lineId, true),
             saveCallback: () => saved = true);
 
-        var appearanceService = AppearanceBuilder.Empty(
+        var appearanceService = AppearanceServiceBuilder.Empty(
             cleanUpCallbacks: new()
             {
                 CleanUpLineCallback = (map, lineId) =>
