@@ -6,63 +6,119 @@ namespace Splatrika.MetroNavigator.Source.Services;
 
 public class MapAppearanceService : IMapAppearanceService
 {
+    private readonly IMapAppearanceRepository _repository;
+
+
     public MapAppearanceService(IMapAppearanceRepository repository)
     {
-        throw new NotImplementedException();
+        _repository = repository;
     }
 
 
-    public Task CleanUpLine(int mapId, int lineId)
+    public async Task CleanUpLine(int mapId, int lineId)
     {
-        throw new NotImplementedException();
+        await Clean(mapId,
+            appearance => appearance.CleanUpLine(lineId));
     }
 
 
-    public Task CleanUpRailway(int mapId, int railwayId)
+    public async Task CleanUpRailway(int mapId, int railwayId)
     {
-        throw new NotImplementedException();
+        await Clean(mapId,
+            appearance => appearance.CleanUpRailway(railwayId));
     }
 
 
-    public Task CleanUpStation(int mapId, int stationId)
+    public async Task CleanUpStation(int mapId, int stationId)
     {
-        throw new NotImplementedException();
+        await Clean(mapId,
+            appearance => appearance.CleanUpStation(stationId));
     }
 
 
-    public Task<LineAppearance> GetLine(int mapId, int lineId)
+    public async Task<LineAppearance> GetLine(int mapId, int lineId)
     {
-        throw new NotImplementedException();
+        return await Get(mapId,
+            get: appearance => appearance.GetLine(lineId),
+            defaultAppearance: LineAppearance.GetDefault(lineId));
     }
 
 
-    public Task<RailwayAppearance> GetRailway(int mapId, int railwayId)
+    public async Task<RailwayAppearance> GetRailway(int mapId, int railwayId)
     {
-        throw new NotImplementedException();
+        return await Get(mapId,
+            get: appearance => appearance.GetRailway(railwayId),
+            defaultAppearance: RailwayAppearance.GetDefault(railwayId));
     }
 
 
-    public Task<StationAppearance> GetStation(int mapId, int stationId)
+    public async Task<StationAppearance> GetStation(int mapId, int stationId)
     {
-        throw new NotImplementedException();
+        return await Get(mapId,
+            get: appearance => appearance.GetStation(stationId),
+            defaultAppearance: StationAppearance.GetDefault(stationId));
     }
 
 
-    public Task UpdateLine(int mapId, int lineId, Color color)
+    public async Task UpdateLine(int mapId, int lineId, Color color)
     {
-        throw new NotImplementedException();
+        await Update(mapId,
+            appearance => appearance.UpdateLine(lineId, color));
     }
 
 
-    public Task UpdateRailway(int mapId, int railwayId, IEnumerable<Position> points)
+    public async Task UpdateRailway(int mapId, int railwayId,
+        IEnumerable<Position> points)
     {
-        throw new NotImplementedException();
+        await Update(mapId,
+            appearance => appearance.UpdateRailway(railwayId, new(points)));
     }
 
 
-    public Task UpdateStation(int mapId, int stationId, Position position, Caption caption)
+    public async Task UpdateStation(int mapId, int stationId, Position position,
+        Caption caption)
     {
-        throw new NotImplementedException();
+        await Update(mapId,
+            appearance => appearance.UpdateStation(stationId, position, caption));
+    }
+
+
+    private async Task Clean(int mapId, Action<MapAppearance> action)
+    {
+        if (!await _repository.ContainsAsync(mapId)) return;
+
+        var appearance = await _repository.GetFullAsync(mapId);
+        action.Invoke(appearance);
+        await _repository.SaveChangesAsync();
+    }
+
+
+    private async Task Update(int mapId, Action<MapAppearance> action)
+    {
+        MapAppearance? created = null;
+
+        if (!await _repository.ContainsAsync(mapId))
+        {
+            created = new MapAppearance(mapId);
+            await _repository.AddAsync(created);
+        }
+
+        var appearance = created ?? await _repository.GetFullAsync(mapId);
+        action.Invoke(appearance);
+        await _repository.SaveChangesAsync();
+    }
+
+
+    private async Task<T> Get<T>(int mapId, Func<MapAppearance, T> get,
+        T defaultAppearance)
+    {
+        if (!await _repository.ContainsAsync(mapId))
+        {
+            return defaultAppearance;
+        }
+
+        var appearance = await _repository.GetFullAsync(mapId);
+        return get.Invoke(appearance);
     }
 }
 
