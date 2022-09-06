@@ -8,8 +8,8 @@ public static class EntityUtility
 {
     public static void ChangeId(EntityBase instance, int id)
     {
-        var property = instance.GetType().GetProperty("Id",
-            BindingFlags.NonPublic | BindingFlags.Instance)!;
+        var property = typeof(EntityBase).GetProperty("Id",
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
         property.SetValue(instance, id);
     }
 }

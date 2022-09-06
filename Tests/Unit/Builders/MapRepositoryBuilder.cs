@@ -16,6 +16,16 @@ public static class MapRepositoryBuilder
         mock.Setup(allowedQuery)
             .Returns(Task.FromResult(map));
 
+        mock.Setup(m => m.ContainsAsync(map.Id))
+            .Returns(Task.FromResult(true));
+
+        mock.Setup(m => m.ContainsAsync(It.IsNotIn(map.Id)))
+            .Returns(Task.FromResult(false));
+
+        mock.Setup(m => m.SaveChangesAsync())
+            .Callback(() => saveCallback?.Invoke())
+            .Returns(Task.CompletedTask);
+
         return mock.Object;
     }
 }

@@ -10,5 +10,14 @@ public class StaticDuration : DurationFactor
     {
         StaticSeconds = seconds;
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is StaticDuration duration)
+        {
+            return duration.StaticSeconds == StaticSeconds;
+        }
+        return base.Equals(obj);
+    }
 }
 

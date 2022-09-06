@@ -18,15 +18,15 @@ public class LineEditorServiceTests
     [Fact]
     public async Task Create()
     {
-        Station? created = null;
+        Line? created = null;
         var saved = false;
 
         var map = MapBuilder.WithItems(mapId,
             createCallbacks: new()
             {
-                CreateStaiton = station =>
+                CreateLine = line =>
                 {
-                    created = station;
+                    created = line;
                     saved = false;
                 }
             });

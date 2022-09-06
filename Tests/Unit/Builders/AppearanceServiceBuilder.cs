@@ -29,7 +29,7 @@ public static class AppearanceServiceBuilder
         mock.Setup(m => m.GetLine(mapId, lineAppearance.LineId))
             .Returns(Task.FromResult(lineAppearance));
 
-        MockDefaultGets(mock, excludeStationId: lineAppearance.LineId);
+        MockDefaultGets(mock, excludeLineId: lineAppearance.LineId);
 
         return mock.Object;
     }
@@ -101,8 +101,8 @@ public static class AppearanceServiceBuilder
         if (excludeStationId != null)
         {
             var id = (int)excludeStationId!;
-            getLineExpression =
-                m => m.GetLine(It.IsAny<int>(), It.IsNotIn(id));
+            getStationExpression =
+                m => m.GetStation(It.IsAny<int>(), It.IsNotIn(id));
         }
 
         Expression<Func<IMapAppearanceService, Task<RailwayAppearance>>>
@@ -179,27 +179,29 @@ public static class AppearanceServiceBuilder
     private static void MockCleanUp(Mock<IMapAppearanceService> mock,
         CleanUpCallbacks callbacks)
     {
-        var callbacksList = new List<Action<int, int>?>()
-        {
-            callbacks.CleanUpLineCallback,
-            callbacks.CleanUpStationCallback,
-            callbacks.CleanUpRailwayCallback
-        };
-        var expressions = new List<Expression<Func<IMapAppearanceService, Task>>>()
-        {
+        var expressionCallbacks = new Dictionary<
+            Expression<Func<IMapAppearanceService, Task>>,
+            Action<int, int>?>();
+
+        expressionCallbacks.Add(
             m => m.CleanUpLine(It.IsAny<int>(), It.IsAny<int>()),
+            callbacks.CleanUpLineCallback);
+
+        expressionCallbacks.Add(
             m => m.CleanUpStation(It.IsAny<int>(), It.IsAny<int>()),
+            callbacks.CleanUpStationCallback);
+
+        expressionCallbacks.Add(
             m => m.CleanUpRailway(It.IsAny<int>(), It.IsAny<int>()),
-        };
-        for (var i = 0; i < callbacksList.Count; i++)
+            callbacks.CleanUpRailwayCallback);
+
+        foreach (var expression in expressionCallbacks.Keys)
         {
-            mock.Setup(expressions[i])
+            mock.Setup(expression)
                 .Returns<int, int>((mapId, elementId) =>
                 {
-                    if (callbacksList[i] != null)
-                    {
-                        callbacksList[i]!.Invoke(mapId, elementId);
-                    }
+                    var callback = expressionCallbacks[expression];
+                    callback?.Invoke(mapId, elementId);
                     return Task.CompletedTask;
                 });
         }
