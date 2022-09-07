@@ -139,7 +139,7 @@ public static class MapBuilder
             mock.Setup(expression)
                 .Callback<int>(id =>
                 {
-                    if (callback != null) callback(id);
+                    callback?.Invoke(id);
                 });
         }
 

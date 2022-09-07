@@ -135,7 +135,7 @@ public class RailwayEditorServiceTests
 
         var repository = MapRepositoryBuilder.WithSingleMap(map,
             allowedQuery: x => x.GetFull(mapId, true),
-            saveCallback: () => saved = false);
+            saveCallback: () => saved = true);
 
         var appearanceService = AppearanceServiceBuilder.Empty(
             updateCallbacks: new()

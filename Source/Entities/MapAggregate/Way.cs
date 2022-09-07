@@ -7,7 +7,7 @@ public class Way : EntityBase
 {
     public Station From { get; private set; }
     public Station To { get; private set; }
-    public DurationFactor Duration { get; private set; }
+    public DurationFactor Duration { get; set; }
 
 #pragma warning disable 8618
     protected Way() { } //Required by EF
