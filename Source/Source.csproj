@@ -20,6 +20,7 @@
     <Folder Include="Services\Editor\" />
     <Folder Include="Services\Editor\Dto\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Data\" />
