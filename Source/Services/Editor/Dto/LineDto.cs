@@ -1,6 +1,6 @@
 ﻿using Splatrika.MetroNavigator.Source.Entities;
 
-namespace Splatrika.MetroNavigator.Source.Services.Editor;
+namespace Splatrika.MetroNavigator.Source.Services.Editor.Dto;
 
 #nullable disable
 

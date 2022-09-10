@@ -6,6 +6,10 @@ public class StaticDuration : DurationFactor
     public float StaticSeconds { get; set; }
     public override float Seconds => StaticSeconds;
 
+#pragma warning disable 8618
+    private StaticDuration() { } //Required by EF
+#pragma warning restore 8618
+
     public StaticDuration(float seconds = 0, int id = 0) : base(id)
     {
         StaticSeconds = seconds;

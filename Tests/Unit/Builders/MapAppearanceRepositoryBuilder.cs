@@ -21,10 +21,10 @@ public static class MapAppearanceRepositoryBuilder
             .Callback(() => saveCallback?.Invoke())
             .Returns(Task.CompletedTask);
 
-        mock.Setup(m => m.ContainsAsync(appearance.MapId))
+        mock.Setup(m => m.ContainsForMapAsync(appearance.MapId))
             .Returns(Task.FromResult(true));
 
-        mock.Setup(m => m.ContainsAsync(It.IsNotIn(appearance.MapId)))
+        mock.Setup(m => m.ContainsForMapAsync(It.IsNotIn(appearance.MapId)))
             .Returns(Task.FromResult(false));
 
         mock.Setup(m => m.AddAsync(It.IsAny<MapAppearance>()))
@@ -42,7 +42,7 @@ public static class MapAppearanceRepositoryBuilder
     {
         var mock = new Mock<IMapAppearanceRepository>();
 
-        mock.Setup(m => m.ContainsAsync(It.IsAny<int>()))
+        mock.Setup(m => m.ContainsForMapAsync(It.IsAny<int>()))
             .Returns(Task.FromResult(false));
 
         mock.Setup(m => m.SaveChangesAsync())

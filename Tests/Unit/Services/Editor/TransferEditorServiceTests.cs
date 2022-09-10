@@ -92,7 +92,6 @@ public class TransferEditorServiceTests
         Assert.Equal(transfer.Id, result.ElementId);
         Assert.Equal(transfer.From.Id, result.FromId);
         Assert.Equal(transfer.To.Id, result.ToId);
-        Assert.Equal(transfer.Duration, result.Duration);
     }
 
 
@@ -118,13 +117,11 @@ public class TransferEditorServiceTests
             MapId = mapId,
             ElementId = transfer.Id,
             FromId = transfer.From.Id,
-            ToId = transfer.To.Id,
-            Duration = new StaticDuration(120)
+            ToId = transfer.To.Id
         };
 
         var service = new TransferEditorService(repository);
         await service.Update(updateArgs);
-        Assert.Equal(updateArgs.Duration, transfer.Duration);
         Assert.True(saved);
     }
 
@@ -171,8 +168,7 @@ public class TransferEditorServiceTests
             MapId = mapId,
             ElementId = transfer.Id,
             FromId = station3.Id,
-            ToId = station1.Id,
-            Duration = transfer.Duration
+            ToId = station1.Id
         };
 
         var service = new TransferEditorService(repository);
@@ -181,6 +177,7 @@ public class TransferEditorServiceTests
         Assert.NotNull(created);
         Assert.Equal(station3.Id, created.From.Id);
         Assert.Equal(station1.Id, created.To.Id);
+        Assert.True(saved);
     }
 
 

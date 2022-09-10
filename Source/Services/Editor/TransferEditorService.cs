@@ -52,8 +52,7 @@ public class TransferEditorService : EditorService<TransferEditorDto>
             MapId = mapId,
             ElementId = elementId,
             FromId = transfer.From.Id,
-            ToId = transfer.To.Id,
-            Duration = transfer.Duration
+            ToId = transfer.To.Id
         };
     }
 
@@ -69,11 +68,10 @@ public class TransferEditorService : EditorService<TransferEditorDto>
         if (stationsChanged)
         {
             map.RemoveTransfer(transfer.Id);
-            transfer = map.CreateTransfer(dto.FromId, dto.ToId, dto.Duration);
+            transfer = map.CreateTransfer(dto.FromId, dto.ToId, transfer.Duration);
             await _repository.SaveChangesAsync();
             return transfer.Id;
         }
-        transfer.Duration = dto.Duration;
         await _repository.SaveChangesAsync();
         return transfer.Id;
     }

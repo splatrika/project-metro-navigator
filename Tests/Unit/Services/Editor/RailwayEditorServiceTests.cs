@@ -111,7 +111,6 @@ public class RailwayEditorServiceTests
         Assert.Equal(railway.Id, result.ElementId);
         Assert.Equal(railway.From.Id, result.FromId);
         Assert.Equal(railway.To.Id, result.ToId);
-        Assert.Equal(railway.Duration, result.Duration);
         Assert.True(result.Points.SequenceEqual(appearance.Points));
     }
 
@@ -153,7 +152,6 @@ public class RailwayEditorServiceTests
             ElementId = railway.Id,
             FromId = railway.From.Id,
             ToId = railway.To.Id,
-            Duration = new StaticDuration(40),
             Points = new()
             {
                 new(2, 3),
@@ -164,7 +162,6 @@ public class RailwayEditorServiceTests
         var service = new RailwayEditorService(repository, appearanceService);
         await service.Update(updateArgs);
         Assert.True(saved);
-        Assert.Equal(updateArgs.Duration, railway.Duration);
         Assert.NotNull(createdAppearance);
         Assert.Equal(railway.Id, createdAppearance.RailwayId);
         Assert.True(createdAppearance.Points.SequenceEqual(updateArgs.Points));
@@ -243,7 +240,6 @@ public class RailwayEditorServiceTests
             ElementId = railway.Id,
             FromId = station3.Id,
             ToId = station4.Id,
-            Duration = new StaticDuration(40),
             Points = new()
         };
 

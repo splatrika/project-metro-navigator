@@ -85,7 +85,7 @@ public class MapAppearanceService : IMapAppearanceService
 
     private async Task Clean(int mapId, Action<MapAppearance> action)
     {
-        if (!await _repository.ContainsAsync(mapId)) return;
+        if (!await _repository.ContainsForMapAsync(mapId)) return;
 
         var appearance = await _repository.GetFullAsync(mapId);
         action.Invoke(appearance);
@@ -97,7 +97,7 @@ public class MapAppearanceService : IMapAppearanceService
     {
         MapAppearance? created = null;
 
-        if (!await _repository.ContainsAsync(mapId))
+        if (!await _repository.ContainsForMapAsync(mapId))
         {
             created = new MapAppearance(mapId);
             await _repository.AddAsync(created);
@@ -112,7 +112,7 @@ public class MapAppearanceService : IMapAppearanceService
     private async Task<T> Get<T>(int mapId, Func<MapAppearance, T> get,
         T defaultAppearance)
     {
-        if (!await _repository.ContainsAsync(mapId))
+        if (!await _repository.ContainsForMapAsync(mapId))
         {
             return defaultAppearance;
         }

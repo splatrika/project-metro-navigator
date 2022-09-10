@@ -66,7 +66,6 @@ public class RailwayEditorService : EditorService<RailwayEditorDto>
             ElementId = elementId,
             FromId = transfer.From.Id,
             ToId = transfer.To.Id,
-            Duration = transfer.Duration,
             Points = appearance.Points
         };
     }
@@ -87,14 +86,13 @@ public class RailwayEditorService : EditorService<RailwayEditorDto>
             var from = map.Stations.First(x => x.Id == dto.FromId);
 
             railway = map.CreateRailway(from.Line.Id, dto.FromId,
-                dto.ToId, dto.Duration);
+                dto.ToId, railway.Duration);
             await _repository.SaveChangesAsync();
             await _appearanceService
                 .UpdateRailway(dto.MapId, railway.Id, dto.Points);
             return railway.Id;
         }
 
-        railway.Duration = dto.Duration;
         await _appearanceService
             .UpdateRailway(dto.MapId, railway.Id, dto.Points);
         await _repository.SaveChangesAsync();
