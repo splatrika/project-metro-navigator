@@ -40,10 +40,19 @@ public class MapRepository : EntityFrameworkRepository<Map, ApplicationContext>,
             _context.Maps
                 .Include(x => x.Lines)
                 .Include(x => x.Stations)
+                .ThenInclude(x => x.Line)
                 .Include(x => x.Railways)
                 .ThenInclude(x => x.Duration)
+                .Include(x => x.Railways)
+                .ThenInclude(x => x.To)
+                .Include(x => x.Railways)
+                .ThenInclude(x => x.From)
                 .Include(x => x.Transfers)
-                .ThenInclude(x => x.Duration));
+                .ThenInclude(x => x.Duration)
+                .Include(x => x.Transfers)
+                .ThenInclude(x => x.From)
+                .Include(x => x.Transfers)
+                .ThenInclude(x => x.To));
     }  
 
 
@@ -119,6 +128,7 @@ public class MapRepository : EntityFrameworkRepository<Map, ApplicationContext>,
         return await GetAsync(mapId, tracking,
             _context.Maps
                 .Include(x => x.Stations)
+                .ThenInclude(x => x.Line)
                 .Include(x => x.Lines));
     }  
 
