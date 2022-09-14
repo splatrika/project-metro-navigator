@@ -1,0 +1,40 @@
+﻿@using Splatrika.MetroNavigator.Source.Services.Editor.Dto
+@using Splatrika.MetroNavigator.Source.Interfaces
+@using Splatrika.MetroNavigator.Source.Extensions
+@using Splatrika.MetroNavigator.Source.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject IMapRepository reposiotory
+@model TransferEditorDto
+@{
+    ViewBag.MapId = Model.MapId;
+    var map = await reposiotory.GetWithStations(Model.MapId);
+}
+
+<form asp-action="Update" method="post" id="inspector-form">
+    <input asp-for="MapId" value="@Model.MapId" hidden />
+    <input asp-for="ElementId" value="@Model.ElementId" hidden />
+    <div class="mb-3">
+        <label class="form-label">From</label>
+        <select class="form-select" asp-for="FromId"
+                asp-items="@Html.GetStationItems(map, selectedId: Model.FromId)">
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">To</label>
+        <select class="form-select" asp-for="ToId"
+                asp-items="@Html.GetStationItems(map, selectedId:  Model.ToId)">
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Duration</label>
+        <a href="/" class="btn btn-secondary">Change</a>
+    </div>
+</form>
+<partial name="_InspectorActionsPartial"
+         model='@new InspectorActions(inspectorId: "inspector-form",
+                                      element: Model)' />
+
+@section ElementsList {
+    <partial name="_ElementsListPartial" model="@Model.MapId">
+}

@@ -31,7 +31,13 @@ public class MapRepository : EntityFrameworkRepository<Map, ApplicationContext>,
     public override async Task<Map> GetAsync(int id, bool tracking = true)
     {
         return await GetAsync(id, tracking, _context.Maps);
-    }  
+    }
+
+
+    public async Task<List<Map>> GetList()
+    {
+        return await _context.Maps.ToListAsync();
+    }
 
 
     public async Task<Map> GetFull(int mapId, bool tracking = true)

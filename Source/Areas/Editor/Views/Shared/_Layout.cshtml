@@ -1,0 +1,88 @@
+﻿@using Splatrika.MetroNavigator.Source.Interfaces
+@inject IMapRepository repository
+@{
+    var mapName = "Unknown";
+    if (ViewBag.MapId is int)
+    {
+        var id = (int)ViewBag.MapId;
+        if (await repository.ContainsAsync(id))
+        {
+            var map = await repository.GetAsync(id, tracking: false);
+            mapName = map.Name;
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map editor - {name}</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.5/dist/umd/popper.min.js"
+            integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+            crossorigin="anonymous"></script>
+</head>
+    <body class="map-editor-body">
+        <div class="wrapper">
+            <div class="editor-wrapper">
+                <div class="header container-fluid border-bottom justify-content-between">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="mb-0">Map editor: @mapName</h5>
+                        </div>
+                        <span class="col-auto">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle admin-nav-item"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Map editor
+                                </a>
+
+                                <ul class="dropdown-menu shadow">
+                                    @foreach (var map in await repository.GetList())
+                                    {
+                                        <li>
+                                            <a asp-controller="NoSelected"
+                                               asp-route-mapId="@map.Id"
+                                               asp-action="Index"
+                                               class="dropdown-item">
+                                                @map.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                        </span>
+                        <a href="./users.html" class="admin-nav-item">Manage maps</a>
+                        <a href="./users.html" class="admin-nav-item">Manage users</a>
+                        <a href="./account.html" class="admin-nav-item">Account</a>
+                        <a href="#" class="admin-nav-item">Logout</a>
+                        <span>(You are Admin)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="map-wrapper">
+                @RenderSection(name: "Map", required: false)
+            </div>
+            <footer class="container-xl text-secondary mb-3 mt-3">
+                Project metro navigator - 2022 © Belov Daniil
+            </footer>
+        </div>
+        <div class="tree-wrapper bg-light border-left">
+            <h5 class="tree-title mb-3">Elements</h5>
+            @RenderSection(name: "ElementsList", required: false)
+        </div>
+        <div class="inspector-wrapper border-left">
+            <h5>Inspector</h5>
+            @RenderBody()
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
+    <script src="/js/admin.js"></script>
+</html>

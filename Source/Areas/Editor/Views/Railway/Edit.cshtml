@@ -1,0 +1,62 @@
+﻿@using Splatrika.MetroNavigator.Source.Services.Editor.Dto
+@using Splatrika.MetroNavigator.Source.Interfaces
+@using Splatrika.MetroNavigator.Source.Extensions
+@using Splatrika.MetroNavigator.Source.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject IMapRepository reposiotory
+@model RailwayEditorDto
+@{
+    ViewBag.MapId = Model.MapId;
+    var map = await reposiotory.GetWithStations(Model.MapId);
+    Model.Points.Add(new());
+}
+
+<form asp-action="Update" method="post" id="inspector-form">
+    <input asp-for="MapId" value="@Model.MapId" hidden />
+    <input asp-for="ElementId" value="@Model.ElementId" hidden />
+    <div class="mb-3">
+        <label class="form-label">From</label>
+        <select class="form-select" asp-for="FromId"
+                asp-items="@Html.GetStationItems(map, selectedId: Model.FromId)">
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">To</label>
+        <select class="form-select" asp-for="ToId"
+                asp-items="@Html.GetStationItems(map, selectedId:  Model.ToId)">
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Duration</label>
+        <a href="/" class="btn btn-secondary">Change</a>
+    </div>
+    <h6 class="mt-5 mb-3">Points</h6>
+    <div class="points-container" id="points-form">
+        <div class="btn btn-sm btn-secondary add-point">Add point</div>
+        @if (Model.Points != null)
+        {
+            @for (var i = 0; i < Model.Points.Count - 1; i++) // TODO ckeck
+            {
+                <div class="point-item mt-2">
+                    <label for="" class="form-label index-label">@i</label>
+                    <button class="btn btn-sm btn-danger remove-point">remove</button>
+                    <br>
+                    <label for="">Top</label>
+                    <input type="number" class="form-control top-input"
+                           asp-for="Points[i].Top">
+                    <label for="">Left</label>
+                    <input type="number" class="form-control left-input"
+                           asp-for="Points[i].Left">
+                </div>
+            }
+        }
+    </div>
+</form>
+<partial name="_InspectorActionsPartial"
+         model='@new InspectorActions(inspectorId: "inspector-form",
+                                      element: Model)' />
+
+@section ElementsList {
+    <partial name="_ElementsListPartial" model="@Model.MapId">
+}

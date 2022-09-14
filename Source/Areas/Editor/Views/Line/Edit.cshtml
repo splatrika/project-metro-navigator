@@ -1,0 +1,34 @@
+﻿@using Splatrika.MetroNavigator.Source.Services.Editor.Dto
+@using Splatrika.MetroNavigator.Source.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model LineDto
+@{
+    ViewBag.MapId = Model.MapId;
+}
+<form asp-action="Update" method="post" id="inspector-form">
+    <input type="number" asp-for="MapId" value="@Model.MapId" hidden />
+    <input type="number" asp-for="ElementId" value="@Model.ElementId" hidden />
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Red</label>
+        <input type="number" class="form-control" asp-for="Color.Red" />
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Green</label>
+        <input type="number" class="form-control" asp-for="Color.Green" />
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Blue</label>
+        <input type="number" class="form-control" asp-for="Color.Blue" />
+    </div>
+</form>
+<partial name="_InspectorActionsPartial"
+         model='@new InspectorActions(inspectorId: "inspector-form",
+                                      element: Model)' />
+
+@section ElementsList {
+    <partial name="_ElementsListPartial" model="@Model.MapId">
+}

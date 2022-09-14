@@ -1,0 +1,10 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model int
+@{
+    var mapId = Model;
+}
+
+@section Tree {
+    <partial name="_TreePartial" model="@mapId" />
+}

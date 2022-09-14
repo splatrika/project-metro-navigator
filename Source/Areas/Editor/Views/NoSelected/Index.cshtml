@@ -1,0 +1,19 @@
+﻿@using Splatrika.MetroNavigator.Source.Interfaces
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IMapRepository repository
+
+@model int
+@{
+    var mapId = Model;
+    ViewBag.MapId = mapId;
+    var map = await repository.GetAsync(mapId, tracking: false);
+}
+
+<p>Select element to edit</p>
+
+@section ElementsList {
+    <partial name="_ElementsListPartial" model="@mapId">
+}
+
+@*<partial name="_EditorSectionsPartial" model="@mapId" />*@

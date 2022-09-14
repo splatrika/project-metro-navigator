@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Splatrika.MetroNavigator.Source.Interfaces;
+﻿using Splatrika.MetroNavigator.Source.Interfaces;
 
 namespace Splatrika.MetroNavigator.Source.Extensions;
 
@@ -17,15 +16,6 @@ public static class EditorExtensions
         {
             builder.Services.AddScoped(type);
         }
-    }
-
-
-    public static void MapEditor(this WebApplication application)
-    {
-        application.MapControllerRoute(
-            name: "Admin",
-            pattern: "map-editor/{mapId}/{controller}/{elementIf}/{action=Edit}",
-            defaults: new { Area = "Editor" });
     }
 }
 

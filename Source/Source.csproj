@@ -21,6 +21,20 @@
     <Folder Include="Services\Editor\Dto\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Editor\" />
+    <Folder Include="Areas\Editor\Controllers\" />
+    <Folder Include="Areas\Editor\Views\" />
+    <Folder Include="Areas\Editor\Views\Line\" />
+    <Folder Include="Areas\Editor\Views\Shared\" />
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="Areas\Editor\Views\Station\" />
+    <Folder Include="Areas\Editor\Views\NoSelected\" />
+    <Folder Include="Areas\Editor\Views\Transfer\" />
+    <Folder Include="Areas\Editor\Views\Railway\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Data\" />
@@ -36,6 +50,18 @@
     <None Remove="Services\Editor\" />
     <None Remove="Services\Editor\Dto\" />
     <None Remove="Exceptions\" />
+    <None Remove="Extensions\" />
+    <None Remove="Areas\" />
+    <None Remove="Areas\Editor\" />
+    <None Remove="Areas\Editor\Controllers\" />
+    <None Remove="Areas\Editor\Views\" />
+    <None Remove="Areas\Editor\Views\Line\" />
+    <None Remove="Areas\Editor\Views\Shared\" />
+    <None Remove="Areas\Editor\Views\Station\" />
+    <None Remove="Areas\Editor\Views\NoSelected\" />
+    <None Remove="Areas\Editor\Views\Transfer\" />
+    <None Remove="Areas\Editor\Views\Railway\" />
+    <None Remove="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
@@ -43,5 +69,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\" />
+    <Content Remove="wwwroot\css\" />
+    <Content Remove="wwwroot\js\" />
   </ItemGroup>
 </Project>

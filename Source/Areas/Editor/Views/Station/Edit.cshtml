@@ -1,0 +1,65 @@
+﻿@using Splatrika.MetroNavigator.Source.Services.Editor.Dto
+@using Splatrika.MetroNavigator.Source.Interfaces
+@using Splatrika.MetroNavigator.Source.Entities.MapAppearanceAggregate
+@using Splatrika.MetroNavigator.Source.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model StationEditorDto
+@inject IMapRepository repository
+@{
+    ViewBag.MapId = Model.MapId;
+    var map = await repository.GetWithLines(Model.MapId, tracking: false);
+}
+
+<form asp-action="Update" method="post" id="inspector-form">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Line</label>
+        <select class="form-select" asp-for="LineId">
+            @foreach (var i in map.Lines)
+            {
+                @if (i.Id == Model.LineId)
+                {
+                    <option value="@i.Id" selected>@i.Name</option>
+                }
+                else
+                {
+                    <option value="@i.Id">@i.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <h6 class="mt-5 mb-3">Position</h6>
+    <div class="mb-3">
+        <label for="station-top" class="form-label">Top</label>
+        <input type="number" class="form-control" id="station-top" asp-for="Position.Top">
+    </div>
+    <div class="mb-3">
+        <label for="station-left" class="form-label">Left</label>
+        <input type="number" class="form-control" id="station-left" asp-for="Position.Left">
+    </div>
+    <h6 class="mt-5 mb-3">Caption</h6>
+    <div class="mb-3">
+        <label fclass="form-label">Offset Top</label>
+        <input type="number" class="form-control" id="station-top" asp-for="Caption.Offset.Top">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Offset Left</label>
+        <input type="number" class="form-control" id="station-top" asp-for="Caption.Offset.Left">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Text aligin</label>
+        <select class="form-select" asp-for="Caption.TextAligin"
+                asp-items="Html.GetEnumSelectList<TextAlign>()"></select>
+    </div>
+</form>
+<partial name="_InspectorActionsPartial"
+         model='@new InspectorActions(inspectorId: "inspector-form",
+                                      element: Model)' />
+
+@section ElementsList {
+    <partial name="_ElementsListPartial" model="@Model.MapId">
+}

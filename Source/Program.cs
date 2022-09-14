@@ -12,17 +12,20 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("ApplicationConnection")));
 
-
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapAppearanceRepository, MapAppearanceRepository>();
 builder.Services.AddScoped<IMapAppearanceService, MapAppearanceService>();
 builder.AddEditorServices();
+builder.AddWebEditor();
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 app.MapGet("/", () => "Hello World!");
 
-
+app.MapEditor();
 
 app.Run();

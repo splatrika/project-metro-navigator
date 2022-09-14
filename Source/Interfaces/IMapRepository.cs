@@ -3,6 +3,8 @@ namespace Splatrika.MetroNavigator.Source.Interfaces;
 
 public interface IMapRepository : IRepository<Map>
 {
+    Task<List<Map>> GetList();
+
     Task<Map> GetFull(int mapId, bool tracking = true);
 
     Task<Map> GetWithStation(int mapId, int stationId, bool tracking = true);

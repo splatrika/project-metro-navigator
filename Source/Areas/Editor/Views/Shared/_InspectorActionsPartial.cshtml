@@ -1,0 +1,16 @@
+﻿@using Splatrika.MetroNavigator.Source.ViewModels
+
+@model InspectorActions
+ 
+<div class="mt-4 container">
+    <div class="row">
+        <input type="submit" value="Update" class="btn btn-primary col"
+               id="inspector-submit" form="@Model.InspectorId" />
+        <form asp-action="Delete"
+              asp-route-mapId="@Model.Element.MapId"
+              asp-route-elementId="@Model.Element.ElementId"
+              method="post" class="col">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</div>

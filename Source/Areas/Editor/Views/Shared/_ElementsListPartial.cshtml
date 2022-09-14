@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Splatrika.MetroNavigator.Source.ViewModels
+@using Splatrika.MetroNavigator.Source.Interfaces
+
+@model int
+@{
+    var mapId = Model;
+}
+
+@inject IEditorViewService service
+
+<ul class="tree-content">
+    @foreach (var element in await service.GetMapElements(mapId))
+    {
+        <li>
+            <a asp-controller="@element.Controller"
+               asp-action="@service.EditAction"
+               asp-area="Editor"
+               asp-route-elementId="@element.ElementId"
+               asp-route-mapId="@mapId">
+                @element.Name
+            </a>
+        </li>
+    }
+</ul>
+<div class="dropdown btn-create mt-3">
+    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
+    <ul class="dropdown-menu shadow">
+        @foreach (var controller in service.Controllers)
+        {
+            <li>
+                <form asp-area="Editor"
+                      asp-controller="@controller"
+                      asp-action="@service.CreateAction"
+                      asp-route-mapId="@mapId"
+                      method="post">
+                    <input class="dropdown-item" type="submit" value="@controller" />
+                </form>
+            </li>
+        }
+    </ul>
+</div>
