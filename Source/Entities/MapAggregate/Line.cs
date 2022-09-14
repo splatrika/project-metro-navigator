@@ -13,5 +13,11 @@ public class Line : EntityBase
     {
         Name = name;
     }
+
+
+    public override string ToString()
+    {
+        return $"Line {Name}";
+    }
 }
 

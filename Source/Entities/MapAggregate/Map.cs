@@ -58,6 +58,7 @@ public class Map : EntityBase, IAggregateRoot
     public virtual Railway CreateRailway(int lineId, int fromStationId, int toStationId,
         DurationFactor duration, int id = 0)
     {
+        if (_railways == null) _railways = new();
         return CreateWay(_railways, fromStationId, toStationId, duration,
             onValidate: (from, to, duration) =>
             {
@@ -82,6 +83,7 @@ public class Map : EntityBase, IAggregateRoot
     public virtual Transfer CreateTransfer(int fromStationId, int toStationId,
         DurationFactor duration, int id = 0)
     {
+        if (_transfers == null) _transfers = new();
         return CreateWay(_transfers, fromStationId, toStationId, duration,
             onValidate: (from, to, duration) => { },
             create: (from, to, duration) => new(from, to, duration, id));

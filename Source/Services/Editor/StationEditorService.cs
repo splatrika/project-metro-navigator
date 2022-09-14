@@ -36,7 +36,7 @@ public class StationEditorService : EditorService<StationEditorDto> // todo fix
     public override async Task Delete(int mapId, int elementId)
     {
         await CheckMap(mapId);
-        var map = await _repository.GetWithStation(mapId, elementId, true);
+        var map = await _repository.GetFull(mapId, true);
         map.RemoveStation(elementId);
         await _repository.SaveChangesAsync();
         await _appearanceService.CleanUpStation(mapId, elementId);

@@ -6,6 +6,7 @@ using Splatrika.MetroNavigator.Source.Entities.MapAppearanceAggregate;
 using Splatrika.MetroNavigator.Source.Exceptions;
 using Splatrika.MetroNavigator.Source.Interfaces;
 using Splatrika.MetroNavigator.Source.Services.Editor;
+using Splatrika.MetroNavigator.Source.Services.Editor.Dto;
 using Splatrika.MetroNavigator.Tests.Unit.Builders;
 
 namespace Splatrika.MetroNavigator.Tests.Unit.Services.Editor;

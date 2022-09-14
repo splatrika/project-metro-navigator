@@ -15,5 +15,11 @@ public class Station : EntityBase
         Name = name;
         Line = line;
     }
+
+
+    public override string ToString()
+    {
+        return $"Station {Name}";
+    }
 }
 

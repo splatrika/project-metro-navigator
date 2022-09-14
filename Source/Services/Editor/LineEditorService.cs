@@ -32,7 +32,7 @@ public class LineEditorService : EditorService<LineDto>
     public override async Task Delete(int mapId, int elementId)
     {
         await CheckMap(mapId);
-        var map = await _repository.GetWithLine(mapId, elementId);
+        var map = await _repository.GetFull(mapId);
         map.RemoveLine(elementId);
         await _appearanceService.CleanUpLine(mapId, elementId);
         await _repository.SaveChangesAsync();

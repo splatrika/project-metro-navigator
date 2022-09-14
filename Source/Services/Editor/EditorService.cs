@@ -5,7 +5,7 @@ using Splatrika.MetroNavigator.Source.Interfaces;
 
 namespace Splatrika.MetroNavigator.Source.Services.Editor;
 
-public abstract class EditorService<T> : IEditorService
+public abstract class EditorService<T> : IEditorService<T>
     where T : EditorDto
 {
     protected readonly IMapRepository _repository;

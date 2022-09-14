@@ -18,7 +18,7 @@ public class TransferEditorService : EditorService<TransferEditorDto>
     public override async Task<int> Create(int mapId)
     {
         await CheckMap(mapId);
-        var map = await _repository.GetWithStations(mapId);
+        var map = await _repository.GetWithStationsAndLines(mapId);
         var from = map.Stations.FirstOrDefault();
         var to = map.Stations.FirstOrDefault(x => x.Id != from?.Id);
         if (from == null || to == null)
@@ -59,6 +59,11 @@ public class TransferEditorService : EditorService<TransferEditorDto>
 
     public override async Task<int> Update(TransferEditorDto dto)
     {
+        if (dto.FromId == dto.ToId)
+        {
+            throw new EditorException(
+                "Unable to create transfer between stations that same");
+        }
         await CheckMap(dto.MapId);
         var map = await _repository.GetFull(dto.MapId);
         var transfer = GetElement(map.Transfers, dto.ElementId);

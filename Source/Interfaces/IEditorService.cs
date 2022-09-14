@@ -8,3 +8,9 @@ public interface IEditorService
     Task Delete(int mapId, int elementId);
 }
 
+
+public interface IEditorService<TDto> : IEditorService
+{
+    Task<TDto> Get(int mapId, int elementId);
+    Task<int> Update(TDto dto);
+}

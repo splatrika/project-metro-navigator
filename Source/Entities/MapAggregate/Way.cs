@@ -20,5 +20,11 @@ public class Way : EntityBase
         To = to;
         Duration = duration;
     }
+
+
+    public override string ToString()
+    {
+        return $"{GetType().Name} {From?.Name} <-> {To?.Name}";
+    }
 }
 

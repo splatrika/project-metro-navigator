@@ -258,7 +258,7 @@ public class StationEditorServiceTests
             });
 
         var repository = MapRepositoryBuilder.WithSingleMap(map,
-            allowedQuery: x => x.GetWithStation(mapId, stationId, true),
+            allowedQuery: x => x.GetFull(mapId, true),
             saveCallback: () => saved = true);
 
         var appearanceService = AppearanceServiceBuilder.Empty(

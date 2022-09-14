@@ -16,13 +16,15 @@ public class TransferEditorServiceTests
     [Fact]
     public async Task CreateWithNoStations()
     {
-        var station1 = new Station("Station1", null, id: 41);
+        var line1 = new Line("L", id: 2);
+        var station1 = new Station("Station1", line1, id: 41);
 
         var map = MapBuilder.WithItems(mapId,
+            linesReference: new() { line1 },
             stationsReference: new() { station1 });
 
         var repository = MapRepositoryBuilder.WithSingleMap(map,
-            allowedQuery: x => x.GetWithStations(mapId, true));
+            allowedQuery: x => x.GetWithStationsAndLines(mapId, true));
 
         var service = new TransferEditorService(repository);
 
@@ -39,11 +41,13 @@ public class TransferEditorServiceTests
         Transfer? created = null;
         var saved = false;
 
-        var station1 = new Station("Station1", null, id: 41);
-        var station2 = new Station("Station2", null, id: 42);
+        var line1 = new Line("L", id: 2);
+        var station1 = new Station("Station1", line1, id: 41);
+        var station2 = new Station("Station2", line1, id: 42);
         var stationIds = new int[] { station1.Id, station2.Id };
 
         var map = MapBuilder.WithItems(mapId,
+            linesReference: new() { line1 },
             stationsReference: new() { station1, station2 },
             createCallbacks: new()
             {
@@ -55,7 +59,7 @@ public class TransferEditorServiceTests
             });
 
         var repository = MapRepositoryBuilder.WithSingleMap(map,
-            allowedQuery: x => x.GetWithStations(mapId, true),
+            allowedQuery: x => x.GetWithStationsAndLines(mapId, true),
             saveCallback: () => saved = true);
 
         var service = new TransferEditorService(repository);

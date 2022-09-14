@@ -124,6 +124,9 @@ public class LineEditorServiceTests
 
         var map = MapBuilder.WithItems(mapId,
             linesReference: lines,
+            stationsReference: new(),
+            railwaysReference: new(),
+            transfersReference: new(),
             removeCallbacks: new()
             {
                 RemoveLine = id =>
@@ -134,7 +137,7 @@ public class LineEditorServiceTests
             });
 
         var repository = MapRepositoryBuilder.WithSingleMap(map,
-            allowedQuery: x => x.GetWithLine(mapId, lineId, true),
+            allowedQuery: x => x.GetFull(mapId, true),
             saveCallback: () => saved = true);
 
         var appearanceService = AppearanceServiceBuilder.Empty(
