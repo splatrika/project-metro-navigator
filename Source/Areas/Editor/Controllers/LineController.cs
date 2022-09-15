@@ -6,7 +6,7 @@ using Splatrika.MetroNavigator.Source.Services.Editor.Dto;
 
 namespace Splatrika.MetroNavigator.Source.Controllers.MapEditor;
 
-public class LineController : EditorBase<LineDto, IEditorService<LineDto>, Line>
+public class LineController : EditorBase<LineEditorDto, IEditorService<LineEditorDto>, Line>
 {
     public LineController(LineEditorService service) : base(service)
     {

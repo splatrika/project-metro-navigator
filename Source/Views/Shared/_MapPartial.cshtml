@@ -1,0 +1,19 @@
+﻿@using Splatrika.MetroNavigator.Source.Entities.MapAggregate
+@using Splatrika.MetroNavigator.Source.Entities
+@using Splatrika.MetroNavigator.Source.Interfaces
+
+@model int
+@{
+    const int railwayWidth = 3;
+}
+@inject IMapAppearanceService appearanceService
+@inject IMapRepository repository
+@{
+    var map = await repository.GetFull(Model, tracking: false);
+}
+
+<svg width="100%" height="100%">
+    <partial name="_RailwaysPartial" model="@map" />
+    <partial name="_TransfersPartial" model="@map" />
+</svg>
+<partial name="_StationsPartial" model="@map" />

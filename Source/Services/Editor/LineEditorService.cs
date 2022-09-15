@@ -5,7 +5,7 @@ using Splatrika.MetroNavigator.Source.Services.Editor.Dto;
 
 namespace Splatrika.MetroNavigator.Source.Services.Editor;
 
-public class LineEditorService : EditorService<LineDto>
+public class LineEditorService : EditorService<LineEditorDto>
 {
     public const string DefaultName = "Unnamed line";
 
@@ -39,14 +39,14 @@ public class LineEditorService : EditorService<LineDto>
     }
 
 
-    public override async Task<LineDto> Get(int mapId, int elementId)
+    public override async Task<LineEditorDto> Get(int mapId, int elementId)
     {
         await CheckMap(mapId);
         var map = await _repository.GetWithLine(mapId, elementId);
         var line = GetElement(map.Lines, elementId);
         var appearance = await _appearanceService.GetLine(mapId, elementId);
 
-        return new LineDto
+        return new LineEditorDto
         {
             MapId = mapId,
             ElementId = elementId,
@@ -56,7 +56,7 @@ public class LineEditorService : EditorService<LineDto>
     }
 
 
-    public override async Task<int> Update(LineDto dto)
+    public override async Task<int> Update(LineEditorDto dto)
     {
         await CheckMap(dto.MapId);
         var map = await _repository.GetWithLine(dto.MapId, dto.ElementId);

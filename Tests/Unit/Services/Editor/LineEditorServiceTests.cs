@@ -96,7 +96,7 @@ public class LineEditorServiceTests
 
         var service = new LineEditorService(repository, appearanceService);
 
-        var updateArgs = new LineDto
+        var updateArgs = new LineEditorDto
         {
             MapId = mapId,
             ElementId = lineId,

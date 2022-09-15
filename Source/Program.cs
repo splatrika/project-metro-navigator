@@ -26,6 +26,6 @@ app.UseStaticFiles();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapEditor();
+app.MapWebEditor();
 
 app.Run();

@@ -1,10 +1,4 @@
-﻿@using Splatrika.MetroNavigator.Source.Services.Editor.Dto
-@using Splatrika.MetroNavigator.Source.Interfaces
-@using Splatrika.MetroNavigator.Source.Extensions
-@using Splatrika.MetroNavigator.Source.ViewModels
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
-@inject IMapRepository reposiotory
+﻿@inject IMapRepository reposiotory
 @model RailwayEditorDto
 @{
     ViewBag.MapId = Model.MapId;
@@ -60,3 +54,8 @@
 @section ElementsList {
     <partial name="_ElementsListPartial" model="@Model.MapId">
 }
+
+@section Map {
+    <partial name="_MapPartial" model="@Model.MapId" />
+}
+

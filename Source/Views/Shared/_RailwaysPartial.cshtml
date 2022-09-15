@@ -1,0 +1,41 @@
+﻿@using Splatrika.MetroNavigator.Source.Entities.MapAggregate
+@using Splatrika.MetroNavigator.Source.Entities
+@using Splatrika.MetroNavigator.Source.Interfaces
+
+@model Map
+@inject IMapAppearanceService appearanceService
+
+
+@foreach (var railway in Model.Railways)
+{
+    var appearance = await appearanceService.GetRailway(
+        mapId: Model.Id,
+        railway.Id);
+    var from = await appearanceService.GetStation(
+        mapId: Model.Id,
+        stationId: railway.From.Id);
+    var to = await appearanceService.GetStation(
+        mapId: Model.Id,
+        stationId: railway.To.Id);
+    var line = await appearanceService.GetLine(
+        mapId: Model.Id,
+        lineId: railway.From.Line.Id);
+    var points = new List<Position>();
+    var color = line.Color.GetHex();
+    points.Add(from.Position);
+    if (appearance.Points != null)
+    {
+        points.AddRange(appearance.Points);
+    }
+    points.Add(to.Position);
+    @for (var i = 0; i < points.Count - 1; i++)
+    {
+        var point1 = points[i];
+        var point2 = points[i + 1];
+        <line x1="@point1.Left"
+                y1="@point1.Top"
+                x2="@point2.Left"
+                y2="@point2.Top"
+                style="stroke: @color; stroke-width: 3px" />
+    }
+}

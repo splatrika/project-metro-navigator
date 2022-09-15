@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Splatrika.MetroNavigator.Source.Entities.MapAggregate;
+using Splatrika.MetroNavigator.Source.Entities.MapAppearanceAggregate;
 using Splatrika.MetroNavigator.Source.Interfaces;
 using Splatrika.MetroNavigator.Source.Services.Editor;
 
@@ -7,7 +9,7 @@ namespace Splatrika.MetroNavigator.Source.Extensions;
 
 public static class WebEditorExtensions
 {
-    public static void MapEditor(this WebApplication application)
+    public static void MapWebEditor(this WebApplication application)
     {
         application.MapAreaControllerRoute(
             name: "Editor",
@@ -24,6 +26,11 @@ public static class WebEditorExtensions
             areaName: "Editor",
             pattern: "/map-editor/{mapId}/{action=Index}",
             defaults: new { controller = "NoSelected" });
+
+        application.MapAreaControllerRoute(
+            name: "Admin",
+            areaName: "Admin",
+            pattern: "/admin/{Controller}/{Action=Index}");
     }
 
 

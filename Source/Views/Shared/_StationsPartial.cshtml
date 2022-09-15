@@ -1,0 +1,31 @@
+﻿@using Splatrika.MetroNavigator.Source.Entities.MapAggregate
+@using Splatrika.MetroNavigator.Source.Extensions
+@using Splatrika.MetroNavigator.Source.Interfaces
+
+@model Map
+@inject IMapAppearanceService appearanceService
+
+<metro-map>
+    @foreach (var station in Model.Stations)
+    {
+        var appearance = await appearanceService.GetStation(
+            mapId: Model.Id,
+            station.Id);
+        var line = await appearanceService.GetLine(
+            mapId: Model.Id,
+            lineId: station.Line.Id);
+        var top = $"{appearance.Position.Top}px";
+        var left = $"{appearance.Position.Left}px";
+
+        <div class="station"
+             station-name="@station.Name"
+             style="top: @top; left: @left"
+             station-id="@station.Id">
+            <div class="station-content-wrapper">
+                <button class="station-cup"
+                        style="background-color: @line.Color.GetHex()"></button>
+                <p style="@Html.GetCaptionStyle(appearance)">@station.Name</p>
+            </div>
+        </div>
+    }
+</metro-map>

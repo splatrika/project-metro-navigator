@@ -46,19 +46,23 @@ public class MapRepository : EntityFrameworkRepository<Map, ApplicationContext>,
             _context.Maps
                 .Include(x => x.Lines)
                 .Include(x => x.Stations)
-                .ThenInclude(x => x.Line)
+                    .ThenInclude(x => x.Line)
                 .Include(x => x.Railways)
-                .ThenInclude(x => x.Duration)
+                    .ThenInclude(x => x.Duration)
                 .Include(x => x.Railways)
-                .ThenInclude(x => x.To)
+                    .ThenInclude(x => x.To)
+                        .ThenInclude(x => x.Line)
                 .Include(x => x.Railways)
-                .ThenInclude(x => x.From)
+                    .ThenInclude(x => x.From)
+                        .ThenInclude(x => x.Line)
                 .Include(x => x.Transfers)
-                .ThenInclude(x => x.Duration)
+                    .ThenInclude(x => x.Duration)
                 .Include(x => x.Transfers)
-                .ThenInclude(x => x.From)
+                    .ThenInclude(x => x.From)
+                        .ThenInclude(x => x.Line)
                 .Include(x => x.Transfers)
-                .ThenInclude(x => x.To));
+                    .ThenInclude(x => x.To)
+                        .ThenInclude(x => x.Line));
     }  
 
 

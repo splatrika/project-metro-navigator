@@ -1,0 +1,22 @@
+﻿@using Splatrika.MetroNavigator.Source.Entities.MapAggregate
+@using Splatrika.MetroNavigator.Source.Interfaces
+@using Splatrika.MetroNavigator.Source.Extensions
+
+@model Map
+@inject IMapAppearanceService appearanceService
+
+
+@foreach (var transfer in Model.Transfers)
+{
+    var from = await appearanceService.GetStation(
+        mapId: Model.Id,
+        stationId: transfer.From.Id);
+    var to = await appearanceService.GetStation(
+        mapId: Model.Id,
+        stationId: transfer.To.Id);
+    <line x1="@Html.AsPixels(from.Position.Left)"
+            y1="@Html.AsPixels(from.Position.Top)"
+            x2="@Html.AsPixels(to.Position.Left)"
+            y2="@Html.AsPixels(to.Position.Top)"
+            style="stroke: #D0D0D0; stroke-width: 9px" />
+}

@@ -1,7 +1,4 @@
-﻿@using Splatrika.MetroNavigator.Source.Services.Editor.Dto
-@using Splatrika.MetroNavigator.Source.ViewModels
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model LineDto
+﻿@model LineEditorDto
 @{
     ViewBag.MapId = Model.MapId;
 }
@@ -14,15 +11,15 @@
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Red</label>
-        <input type="number" class="form-control" asp-for="Color.Red" />
+        <input class="form-control" asp-for="Color.Red" />
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Green</label>
-        <input type="number" class="form-control" asp-for="Color.Green" />
+        <input class="form-control" asp-for="Color.Green" />
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Blue</label>
-        <input type="number" class="form-control" asp-for="Color.Blue" />
+        <input class="form-control" asp-for="Color.Blue" />
     </div>
 </form>
 <partial name="_InspectorActionsPartial"
@@ -31,4 +28,8 @@
 
 @section ElementsList {
     <partial name="_ElementsListPartial" model="@Model.MapId">
+}
+
+@section Map {
+    <partial name="_MapPartial" model="@Model.MapId" />
 }

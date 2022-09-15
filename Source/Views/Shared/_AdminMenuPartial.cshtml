@@ -1,0 +1,37 @@
+﻿@using Splatrika.MetroNavigator.Source.Interfaces
+
+@inject IMapRepository repository
+
+<span class="dropdown">
+    <a class="dropdown-toggle admin-nav-item"
+       href="#"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+        Map editor
+    </a>
+    <ul class="dropdown-menu shadow">
+        @foreach (var map in await repository.GetList())
+        {
+            <li>
+                <a asp-controller="NoSelected"
+                   asp-route-mapId="@map.Id"
+                   asp-action="Index"
+                   asp-area="Editor"
+                   class="dropdown-item">
+                    @map.Name
+                </a>
+            </li>
+        }
+    </ul>
+</span>
+<a class="admin-nav-item"
+   asp-controller="ManageMaps"
+   asp-action="Index"
+   asp-area="Admin">
+    Manage maps
+</a>
+<a href="/" class="admin-nav-item">Manage users</a>
+<a href="/" class="admin-nav-item">Account</a>
+<a href="/" class="admin-nav-item">Logout</a>
+<span>(You are Admin)</span>
