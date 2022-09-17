@@ -1,7 +1,7 @@
 ﻿using Splatrika.MetroNavigator.Source.Services;
 using Splatrika.MetroNavigator.Source.ViewModels;
 
-namespace Splatrika.MetroNavigator.Unit.Services;
+namespace Splatrika.MetroNavigator.Tests.Unit.Services;
 
 public class ScaleAndMoveServiceTests
 {

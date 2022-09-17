@@ -167,13 +167,13 @@ public class NavigationServiceTests
     {
         for (int i = 0; i < route.Length - 1; i++)
         {
-            var from = route[i];
-            var to = route[i + 1];
+            var a = route[i];
+            var b = route[i + 1];
             var valid =
-                map.Railways.Any(x => x.From == from && x.To == to) ||
-                map.Transfers.Any(x => x.From == from && x.To == to) ||
-                map.Railways.Any(x => x.To == from && x.From == to) ||
-                map.Transfers.Any(x => x.To == from && x.From == to);
+                map.Railways.Any(x => x.From == a && x.To == b) ||
+                map.Transfers.Any(x => x.From == a && x.To == b) ||
+                map.Railways.Any(x => x.To == a && x.From == b) ||
+                map.Transfers.Any(x => x.To == a && x.From == b);
             if (!valid)
             {
                 return false;
