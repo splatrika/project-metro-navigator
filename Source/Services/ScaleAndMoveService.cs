@@ -5,15 +5,24 @@ namespace Splatrika.MetroNavigator.Source.Services;
 
 public class ScaleAndMoveService : IScaleAndMoveService
 {
+    private ScaleAndMove _value;
+
+
+    public ScaleAndMoveService()
+    {
+        _value = ScaleAndMove.Default;
+    }
+
+
     public ScaleAndMove Get()
     {
-        throw new NotImplementedException();
+        return _value;
     }
 
 
     public void Set(ScaleAndMove value)
     {
-        throw new NotImplementedException();
+        _value = value;
     }
 }
 

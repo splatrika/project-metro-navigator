@@ -17,8 +17,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IMapRepository, MapRepository>();
 builder.Services.AddScoped<IMapAppearanceRepository, MapAppearanceRepository>();
 builder.Services.AddScoped<IMapAppearanceService, MapAppearanceService>();
+
 builder.AddEditorServices();
 builder.AddWebEditor();
+
+builder.AddNavigator();
 
 var app = builder.Build();
 
