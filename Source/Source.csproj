@@ -42,6 +42,7 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Admin\Controller\" />
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="Middlewares\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Data\" />
@@ -79,6 +80,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
     <None Remove="Swashbuckle.AspNetCore" />
     <None Remove="Areas\Admin\Controller\" />
+    <None Remove="Middlewares\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">

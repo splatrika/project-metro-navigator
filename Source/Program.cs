@@ -5,6 +5,7 @@ using Splatrika.MetroNavigator.Source.Extensions;
 using Splatrika.MetroNavigator.Source.Interfaces;
 using Splatrika.MetroNavigator.Source.Data.Repositories;
 using Splatrika.MetroNavigator.Source.Services;
+using Splatrika.MetroNavigator.Source.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +27,9 @@ builder.AddNavigator();
 var app = builder.Build();
 
 app.UseStaticFiles();
+app.UseScaleAndMove();
 
 app.MapGet("/", () => "Hello World!");
-
 app.MapWebEditor();
 
 app.Run();
