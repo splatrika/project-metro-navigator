@@ -26,6 +26,9 @@ public static class MapRepositoryBuilder
             .Callback(() => saveCallback?.Invoke())
             .Returns(Task.CompletedTask);
 
+        mock.Setup(m => m.GetList())
+            .Returns(Task.FromResult(new List<Map>() { map }));
+
         return mock.Object;
     }
 }

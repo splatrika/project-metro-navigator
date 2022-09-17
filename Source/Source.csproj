@@ -43,6 +43,7 @@
     <Folder Include="Areas\Admin\Controller\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="Middlewares\" />
+    <Folder Include="Areas\Navigator\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Data\" />
@@ -81,6 +82,7 @@
     <None Remove="Swashbuckle.AspNetCore" />
     <None Remove="Areas\Admin\Controller\" />
     <None Remove="Middlewares\" />
+    <None Remove="Areas\Navigator\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
