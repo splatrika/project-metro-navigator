@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Splatrika.MetroNavigator.Source.Interfaces;
-using Splatrika.MetroNavigator.Source.Services.Editor;
 
 namespace Splatrika.MetroNavigator.Source.Controllers.MapEditor;
 
