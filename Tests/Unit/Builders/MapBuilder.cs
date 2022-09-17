@@ -29,6 +29,9 @@ public static class MapBuilder
         var railwaysList = railwaysReference ?? new();
         var transfersList = transfersReference ?? new();
 
+        mock.SetupGet(m => m.Name)
+            .Returns(name);
+
         mock.SetupGet(m => m.Lines)
             .Returns(() => linesList.AsReadOnly());
 

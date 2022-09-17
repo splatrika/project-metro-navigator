@@ -45,8 +45,8 @@ public class NavigatorControllerTests
         Assert.IsType<ViewResult>(result);
         var view = (ViewResult)result;
         Assert.NotNull(view.Model);
-        Assert.IsType<Navigator>(view.Model);
-        var model = (Navigator)view.Model;
+        Assert.IsType<Navigation>(view.Model);
+        var model = (Navigation)view.Model;
         Assert.Equal(map.Id, model.MapId);
         Assert.Null(model.From);
         Assert.Null(model.To);
@@ -73,8 +73,8 @@ public class NavigatorControllerTests
         Assert.IsType<ViewResult>(result);
         var view = (ViewResult)result;
         Assert.NotNull(view.Model);
-        Assert.IsType<Navigator>(view.Model);
-        var model = (Navigator)view.Model;
+        Assert.IsType<Navigation>(view.Model);
+        var model = (Navigation)view.Model;
         Assert.Equal(map.Id, model.MapId);
         Assert.Equal(station1.Name, model.From);
         Assert.Equal(station2.Name, model.To);
