@@ -2,7 +2,7 @@
 
 namespace Splatrika.MetroNavigator.Source.ViewModels;
 
-public class Navigator
+public class Navigation
 {
     public int MapId { get; set; }
     public string? From { get; set; }
